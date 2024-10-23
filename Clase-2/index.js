@@ -19,7 +19,6 @@ app.use(express.urlencoded({ extended: true }))
 // })
 
 const USERS = []
-app.use(middlewareError) // (err, req, res, next)
 
 app.post('/api/user', (req, res) => {
     const { nombre, apellido, edad } = req.body
@@ -36,6 +35,7 @@ app.post('/api/user', (req, res) => {
     res.send({message: 'Creado el usuario', payload: {nombre, apellido, edad} })
 })
 
+app.use(middlewareError) // (err, req, res, next)
 
 app.listen(8080, () => {
     console.log('Conectado sv')

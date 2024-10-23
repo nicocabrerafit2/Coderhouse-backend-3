@@ -1,6 +1,7 @@
 import { EErrors } from "../handleErrors/handleErrors.js";
 
 export default (err, req, res, next) => {
+    console.log(err.cause)
     switch(err.code){
         case EErrors.INVALID_TYPES:
             res.json({status: 'error en propiedades recibidas', error: err.name})

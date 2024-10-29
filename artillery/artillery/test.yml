@@ -1,0 +1,24 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+    - duration: 5
+      arrivalRate: 50
+      name: Warm up
+scenarios:
+  - name: "Create material and search all"
+    flow:
+      - get:
+          url: "/api/materials/random"
+          capture:
+            - json: "$.materialName"
+              as: "name"
+      - log: "Creando random name"
+      - think: 2
+      - post:
+          url: "/api/materials"
+          json:
+            name: "{{name}}"
+      - think: 2
+      - get:
+          url: "api/materials/{{name}}"
+      - log: "Consultando por: {{name}}"

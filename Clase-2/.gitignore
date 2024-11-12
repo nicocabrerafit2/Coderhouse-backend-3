@@ -1,1 +1,22 @@
+# Dependencias de node
 /node_modules
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Directorios de datos de ambiente
+.env
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Caches y compilaciones
+/build
+/dist
+
+# Archivos de pruebas
+/coverage

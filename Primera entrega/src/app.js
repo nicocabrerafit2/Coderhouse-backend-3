@@ -12,6 +12,7 @@ import mocksRouter from "./routes/mocks.router.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
+mongoose.set("strictQuery", true);
 const connection = mongoose.connect(process.env.MONGO_STRING);
 
 app.use(express.json());

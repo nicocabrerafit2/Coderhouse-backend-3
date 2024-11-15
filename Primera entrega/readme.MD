@@ -5,11 +5,12 @@ Pasos para ejecutar el repositorio:
 - Paso 3: Abrir terminal desde el archivo app.js
 - Paso 4: Instalar dependencias (npm i)
 - Paso 5: Abrir terminal desde archivo app.js y ejecutar npm run dev
+
   Luego de eso ya se encuentra en condiciones de probar los endpoints desde postman.
 
 Esta primera entrega contiene:
 
-cGET http://localhost:8080/api/pets muestra las mascotas
+- GET http://localhost:8080/api/pets muestra las mascotas
 
 - GET http://localhost:8080/api/users muestra los usuarios
 

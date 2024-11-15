@@ -2,7 +2,7 @@ Pasos para ejecutar el repositorio:
 
 - Paso 1: Clonar el repositorio
 - Paso 2: Descargar el archivo .env (enviado por privado) y pegarlo dentro de la carpeta "Primera entrega" (a la misma altura que la carpeta "src")
-- Paso 3: Abrir terminal desde el archivo app.js
+- Paso 3: Abrir terminal desde el archivo app.js (ubicado dentro de carpeta "src")
 - Paso 4: Instalar dependencias (npm i)
 - Paso 5: Abrir terminal desde archivo app.js y ejecutar npm run dev
 
@@ -32,13 +32,13 @@ Esta primera entrega contiene:
   "owner" = null,
   "image" = random url,
 
-- POST http://localhost:8080/api/mocks/generateData genera con faker mascotas y usuarios (recibe por body el parametro numPets y numUsers con los cuales se definen la cantidad a generar, si no se envian estos parametros por defecto es 50 la cantidad. Estos son agregados en la base de datos mongoDB)
+- POST http://localhost:8080/api/mocks/generateData genera con faker mascotas y usuarios (recibe por body el parametro numPets y numUsers con los cuales se definen la cantidad a generar. Estos son agregados en la base de datos mongoDB)
 
 Para lograr esto se utilizan:
 
 - Los router "mocks.router.js", "users.router.js" y "pets.router.js"
 - Desde el archivo utils.js las funciones "generateMockPets", "generateMockUsers" y "createHash"
 - Desde UserRepository el metodo "mockingusers" y desde petRepository el metodo "mockingpets"
-- Los controller "mocks.controller", "users.controller" y "pets.controller" desde donde se responden las peticiones
+- Los controller "mocks.controller", "users.controller" y "pets.controller" desde donde se responden las peticiones (con status incorporado)
 
 Se envian variables de entorno por archivo .env

@@ -1,14 +1,15 @@
 Pasos para ejecutar el repositorio:
-Paso 1: Clonar el repositorio
-Paso 2: Descargar el archivo .env (enviado por privado) y pegarlo dentro de la carpeta "Primera entrega" (a la misma altura que la carpeta "src")
-Paso 3: Abrir terminal desde el archivo app.js
-Paso 4: Instalar dependencias (npm i)
-Paso 5: Abrir terminal desde archivo app.js y ejecutar npm run dev
-Luego de eso ya se encuentra en condiciones de probar los endpoints desde postman.
+
+- Paso 1: Clonar el repositorio
+- Paso 2: Descargar el archivo .env (enviado por privado) y pegarlo dentro de la carpeta "Primera entrega" (a la misma altura que la carpeta "src")
+- Paso 3: Abrir terminal desde el archivo app.js
+- Paso 4: Instalar dependencias (npm i)
+- Paso 5: Abrir terminal desde archivo app.js y ejecutar npm run dev
+  Luego de eso ya se encuentra en condiciones de probar los endpoints desde postman.
 
 Esta primera entrega contiene:
 
-- GET http://localhost:8080/api/pets muestra las mascotas
+cGET http://localhost:8080/api/pets muestra las mascotas
 
 - GET http://localhost:8080/api/users muestra los usuarios
 

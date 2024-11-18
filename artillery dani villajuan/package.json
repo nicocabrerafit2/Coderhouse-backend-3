@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "artillery:dev": "artillery run artillery/test.yml --output testPerformance.json",
+    "artillery:dev": "artillery run artillery/test.yml --output testPerformanceNico.json",
     "dev": "nodemon ./src/app.js"
   },
   "keywords": [],

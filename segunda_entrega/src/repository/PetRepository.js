@@ -8,4 +8,7 @@ export default class PetRepository extends GenericRepository {
   mockingpets = (numPets) => {
     return generateMockPets(numPets);
   };
+  getPetById = (id) => {
+    return this.getBy({ _id: id });
+  };
 }

@@ -28,3 +28,4 @@ app.use("/api/mocks", mocksRouter);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+export default app;

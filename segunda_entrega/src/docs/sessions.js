@@ -110,7 +110,7 @@
  *                   example: 'error'
  *                 error:
  *                   type: string
- *                   example: 'User doesn\'t exist'
+ *                   example: 'User dont exist'
  *       500:
  *         description: Error en el servidor
  */
@@ -207,7 +207,7 @@
  *                   example: 'error'
  *                 error:
  *                   type: string
- *                   example: 'User doesn\'t exist'
+ *                   example: 'User dont exist'
  *       500:
  *         description: Error en el servidor
  */

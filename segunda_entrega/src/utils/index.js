@@ -15,34 +15,27 @@ const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
 
 export const generateMockPets = (numPets) => {
-  let pets = [];
-
-  for (let i = 0; i < numPets; i++) {
-    pets.push({
-      name: faker.person.firstName(),
-      specie: faker.animal.type(),
-      birthDate: faker.date.past(5),
-      adopted: false,
-      owner: null,
-      image: faker.image.url(),
-    });
-  }
-
-  return pets;
+  return Array.from({ length: numPets }, () => ({
+    name: faker.person.firstName(),
+    specie: faker.animal.type(),
+    birthDate: faker.date.past(5),
+    adopted: false,
+    owner: null,
+    image: faker.image.url(),
+  }));
 };
 export const generateMockUsers = async (numUsers) => {
-  const users = [];
-  for (let i = 0; i < numUsers; i++) {
-    users.push({
+  {
+    const promises = Array.from({ length: numUsers }, async () => ({
       first_name: faker.person.firstName(),
       last_name: faker.person.lastName(),
       email: faker.internet.email(),
       password: await createHash("coder123"),
       role: Math.random() < 0.5 ? "user" : "admin",
       pets: [],
-    });
+    }));
+    return Promise.all(promises);
   }
-  return users;
 };
 
 const idValidationConfig = {

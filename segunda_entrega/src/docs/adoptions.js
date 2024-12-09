@@ -82,6 +82,17 @@
  *                   example: "Adoption not found"
  *       500:
  *         description: Error en el servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 error:
+ *                   type: string
+ *                   example: "Error en el servidor"
  */
 
 /**
@@ -141,7 +152,7 @@
  *                   example: "error"
  *                 error:
  *                   type: string
- *                   example: "User not found" or "Pet not found"
+ *                   example: "User not found or Pet not found"
  *       500:
  *         description: Error en el servidor
  */

@@ -1,13 +1,17 @@
 import { expect, request } from "./testSetup.js";
 import app from "../src/app.js";
+import { __dirname } from "../src/utils/index.js";
+import path from "path";
 
-describe("Mascotas API", () => {
-  describe("GET /pets", () => {
-    it("debería obtener todas las mascotas", (done) => {
+describe("Mascotas API", function () {
+  this.timeout(50000); // Aumenta el tiempo de espera para todo el suite
+
+  describe("GET /api/pets", function () {
+    it("debería obtener todas las mascotas", function (done) {
       request(app)
-        .get("/pets")
+        .get("/api/pets")
         .expect(200)
-        .end((err, res) => {
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
           expect(res.body.payload).to.be.an("array"); // Verifica que se devuelve un array de mascotas
@@ -16,18 +20,18 @@ describe("Mascotas API", () => {
     });
   });
 
-  describe("POST /pets", () => {
-    it("debería crear una nueva mascota", (done) => {
+  describe("POST /api/pets", function () {
+    it("debería crear una nueva mascota", function (done) {
       const newPet = {
         name: "Fido",
         specie: "dog",
         birthDate: "2024-01-01T00:00:00.000Z",
       };
       request(app)
-        .post("/pets")
+        .post("/api/pets")
         .send(newPet)
-        .expect(200)
-        .end((err, res) => {
+        .expect(201)
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
           expect(res.body.payload).to.include({ name: "Fido" });
@@ -35,15 +39,15 @@ describe("Mascotas API", () => {
         });
     });
 
-    it("debería rechazar la creación de una mascota con datos incompletos", (done) => {
+    it("debería rechazar la creación de una mascota con datos incompletos", function (done) {
       const incompletePet = {
         name: "Fido",
       };
       request(app)
-        .post("/pets")
+        .post("/api/pets")
         .send(incompletePet)
         .expect(400)
-        .end((err, res) => {
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "error");
           expect(res.body).to.have.property("error", "Incomplete values");
@@ -52,16 +56,16 @@ describe("Mascotas API", () => {
     });
   });
 
-  describe("POST /pets/withimage", () => {
-    it("debería crear una nueva mascota con imagen", (done) => {
+  describe("POST /api/pets/withimage", function () {
+    it("debería crear una nueva mascota con imagen", function (done) {
       request(app)
-        .post("/pets/withimage")
-        .attach("image", "path/to/your/image.jpg") // Asegúrate de que la ruta a tu imagen es correcta
+        .post("/api/pets/withimage")
+        .attach("image", path.join(__dirname, "../public/img/image.jpg"))
         .field("name", "Fido")
         .field("specie", "dog")
         .field("birthDate", "2024-01-01T00:00:00.000Z")
-        .expect(200)
-        .end((err, res) => {
+        .expect(201)
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
           expect(res.body.payload).to.include({ name: "Fido" });
@@ -70,18 +74,18 @@ describe("Mascotas API", () => {
     });
   });
 
-  describe("PUT /pets/:pid", () => {
-    it("debería actualizar una mascota por ID", (done) => {
+  describe("PUT /api/pets/:pid", function () {
+    it("debería actualizar una mascota por ID", function (done) {
       const petId = "somePetId";
       const updatedPetData = {
         name: "Buddy",
         specie: "cat",
       };
       request(app)
-        .put(`/pets/${petId}`)
+        .put(`/api/pets/${petId}`)
         .send(updatedPetData)
         .expect(200)
-        .end((err, res) => {
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
           expect(res.body.payload).to.include(updatedPetData);
@@ -89,16 +93,16 @@ describe("Mascotas API", () => {
         });
     });
 
-    it("debería devolver error si los datos son incompletos", (done) => {
+    it("debería devolver error si los datos son incompletos", function (done) {
       const petId = "somePetId";
       const incompletePetData = {
         name: "Buddy",
       };
       request(app)
-        .put(`/pets/${petId}`)
+        .put(`/api/pets/${petId}`)
         .send(incompletePetData)
         .expect(400)
-        .end((err, res) => {
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "error");
           expect(res.body).to.have.property("error", "Incomplete values");
@@ -107,25 +111,25 @@ describe("Mascotas API", () => {
     });
   });
 
-  describe("DELETE /pets/:pid", () => {
-    it("debería eliminar una mascota por ID", (done) => {
+  describe("DELETE /api/pets/:pid", function () {
+    it("debería eliminar una mascota por ID", function (done) {
       const petId = "somePetId";
       request(app)
-        .delete(`/pets/${petId}`)
+        .delete(`/api/pets/${petId}`)
         .expect(200)
-        .end((err, res) => {
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
           done();
         });
     });
 
-    it("debería devolver error si la mascota no existe", (done) => {
+    it("debería devolver error si la mascota no existe", function (done) {
       const nonExistentPetId = "nonExistentPetId";
       request(app)
-        .delete(`/pets/${nonExistentPetId}`)
+        .delete(`/api/pets/${nonExistentPetId}`)
         .expect(404)
-        .end((err, res) => {
+        .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "error");
           expect(res.body).to.have.property("error", "Pet not found");

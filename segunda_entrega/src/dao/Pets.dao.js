@@ -1,23 +1,43 @@
 import petModel from "./models/Pet.js";
 
 export default class Pet {
-  get = (params) => {
-    return petModel.find(params);
+  get = async (params) => {
+    try {
+      return await petModel.find(params);
+    } catch (error) {
+      throw new Error(`Error fetching pets: ${error.message}`);
+    }
   };
 
-  getBy = (params) => {
-    return petModel.findOne(params);
+  getBy = async (params) => {
+    try {
+      return await petModel.findOne(params);
+    } catch (error) {
+      throw new Error(`Error fetching pet: ${error.message}`);
+    }
   };
 
-  save = (doc) => {
-    return petModel.create(doc);
+  save = async (doc) => {
+    try {
+      return await petModel.create(doc);
+    } catch (error) {
+      throw new Error(`Error saving pet: ${error.message}`);
+    }
   };
 
-  update = (id, doc) => {
-    return petModel.findByIdAndUpdate(id, { $set: doc });
+  update = async (id, doc) => {
+    try {
+      return await petModel.findByIdAndUpdate(id, { $set: doc }, { new: true });
+    } catch (error) {
+      throw new Error(`Error updating pet with ID ${id}: ${error.message}`);
+    }
   };
 
-  delete = (id) => {
-    return petModel.findByIdAndDelete(id);
+  delete = async (id) => {
+    try {
+      return await petModel.findByIdAndDelete(id);
+    } catch (error) {
+      throw new Error(`Error deleting pet with ID ${id}: ${error.message}`);
+    }
   };
 }

@@ -1,7 +1,8 @@
 FROM node:20.18.0
 WORKDIR /app
 COPY package*.json ./
-COPY . .
 RUN npm install
+RUN npm rebuild bcrypt --build-from-source
+COPY . .
 EXPOSE 8080
-CMD ["node","app.js"]
+CMD ["npm", "run", "dev"]

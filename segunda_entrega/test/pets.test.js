@@ -1,4 +1,4 @@
-import { expect, request } from "./testSetup.js";
+import { expect, request, testPet } from "./testSetup.js";
 import app from "../src/app.js";
 import { __dirname } from "../src/utils/index.js";
 import path from "path";
@@ -76,13 +76,13 @@ describe("Mascotas API", function () {
 
   describe("PUT /api/pets/:pid", function () {
     it("debería actualizar una mascota por ID", function (done) {
-      const petId = "67379a0a2eb35daf5fe5bbe1";
       const updatedPetData = {
-        name: "Buddy",
+        name: "UpdatedTestPet",
         specie: "cat",
+        birthDate: new Date()
       };
       request(app)
-        .put(`/api/pets/${petId}`)
+        .put(`/api/pets/${testPet._id}`)
         .send(updatedPetData)
         .expect(200)
         .end(function (err, res) {

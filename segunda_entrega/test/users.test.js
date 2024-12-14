@@ -1,4 +1,4 @@
-import { expect, request } from "./testSetup.js";
+import { expect, request, testUser } from "./testSetup.js";
 import app from "../src/app.js";
 
 describe("Usuarios API", function () {
@@ -20,15 +20,14 @@ describe("Usuarios API", function () {
 
   describe("GET /api/users/:uid", function () {
     it("debería obtener un usuario por ID", function (done) {
-      const userId = "someUserId";
       request(app)
-        .get(`/api/users/${userId}`)
+        .get(`/api/users/${testUser._id}`)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
           expect(res.body.payload).to.be.an("object");
-          expect(res.body.payload).to.have.property("_id", userId);
+          expect(res.body.payload).to.have.property("_id", testUser._id);
           done();
         });
     });
@@ -49,13 +48,16 @@ describe("Usuarios API", function () {
 
   describe("PUT /api/users/:uid", function () {
     it("debería actualizar un usuario por ID", function (done) {
-      const userId = "someUserId";
       const updatedUserData = {
         first_name: "Jane",
         last_name: "Doe",
+        email: "jane.doe@example.com",
+        password: "newpassword",
+        role: "admin",
+        pets: []
       };
       request(app)
-        .put(`/api/users/${userId}`)
+        .put(`/api/users/${testUser._id}`)
         .send(updatedUserData)
         .expect(200)
         .end(function (err, res) {
@@ -67,12 +69,11 @@ describe("Usuarios API", function () {
     });
 
     it("debería devolver error si los datos son incompletos", function (done) {
-      const userId = "someUserId";
       const incompleteUserData = {
         first_name: "Jane",
       };
       request(app)
-        .put(`/api/users/${userId}`)
+        .put(`/api/users/${testUser._id}`)
         .send(incompleteUserData)
         .expect(400)
         .end(function (err, res) {
@@ -86,9 +87,8 @@ describe("Usuarios API", function () {
 
   describe("DELETE /api/users/:uid", function () {
     it("debería eliminar un usuario por ID", function (done) {
-      const userId = "someUserId";
       request(app)
-        .delete(`/api/users/${userId}`)
+        .delete(`/api/users/${testUser._id}`)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);

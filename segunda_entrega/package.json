@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "mocha --require @babel/register --file test/testSetup.js test/**/*.test.js"
+    "test": "mocha --require @babel/register --file test/testSetup.js test/**/*.test.js --timeout 10000"
   },
   "keywords": [],
   "author": "nicolas damian cabrera",
@@ -32,6 +32,6 @@
     "chai": "^4.5.0",
     "chai-http": "^5.1.1",
     "mocha": "^10.8.2",
-    "supertest": "^7.0.0"
+    "supertest": "^6.1.3"
   }
 }

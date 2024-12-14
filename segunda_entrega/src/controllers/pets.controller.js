@@ -33,14 +33,26 @@ const updatePet = async (req, res, next) => {
   try {
     const petUpdateBody = req.body;
     const petId = req.params.pid;
-    if (!validateId(petId, dbType)) {
-      return res.status(400).json({ status: "error", error: "ID no válido" });
+    if (!petUpdateBody ||!validateId(petId, dbType)) {
+      return res.status(400).json({ status: "error", message: "No se proporcionaron datos para actualizar" });
     }
+    const camposRequeridos = ['name', 'specie'];
+    const camposFaltantes = camposRequeridos.filter(campo => 
+            petUpdateBody[campo] === undefined || petUpdateBody[campo] === ''
+        );
+
+        if (camposFaltantes.length > 0) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Incomplete values'
+            });
+    }
+    
     const pet = await petsService.getPetById(petId);
     if (!pet) {
       return res
         .status(404)
-        .json({ status: "error", error: "Mascota no encontrada" });
+        .json({ status: "error", message: "Mascota no encontrada" });
     }
     const result = await petsService.update(petId, petUpdateBody);
     res.status(200).json({
@@ -57,13 +69,13 @@ const deletePet = async (req, res, next) => {
   try {
     const petId = req.params.pid;
     if (!validateId(petId, dbType)) {
-      return res.status(400).json({ status: "error", error: "ID no válido" });
+      return res.status(404).json({ status: "error", message: "Mascota no encontrada" });
     }
     const pet = await petsService.getPetById(petId);
     if (!pet) {
       return res
         .status(404)
-        .json({ status: "error", error: "Mascota no encontrada" });
+        .json({ status: "error", message: "Mascota no encontrada" });
     }
 
     const deletionResult = await petsService.delete(petId);
@@ -72,7 +84,7 @@ const deletePet = async (req, res, next) => {
     } else {
       res
         .status(500)
-        .json({ status: "error", error: "Error al eliminar la mascota" });
+        .json({ status: "error", message: "Error al eliminar la mascota" });
     }
   } catch (error) {
     next(error);
@@ -86,7 +98,7 @@ const createPetWithImage = async (req, res, next) => {
     if (!name || !specie || !birthDate) {
       return res
         .status(400)
-        .json({ status: "error", error: "Incomplete values" });
+        .json({ status: "error", message: "Incomplete values" });
     }
     const pet = PetDTO.getPetInputFrom({
       name,

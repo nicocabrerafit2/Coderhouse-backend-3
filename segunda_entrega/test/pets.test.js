@@ -105,7 +105,7 @@ describe("Mascotas API", function () {
         .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "error");
-          expect(res.body).to.have.property("error", "Incomplete values");
+          expect(res.body).to.have.property("message", "Incomplete values");
           done();
         });
     });
@@ -113,7 +113,7 @@ describe("Mascotas API", function () {
 
   describe("DELETE /api/pets/:pid", function () {
     it("debería eliminar una mascota por ID", function (done) {
-      const petId = "somePetId";
+      const petId = "67379a0a2eb35daf5fe5bbe1";
       request(app)
         .delete(`/api/pets/${petId}`)
         .expect(200)
@@ -132,7 +132,7 @@ describe("Mascotas API", function () {
         .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "error");
-          expect(res.body).to.have.property("error", "Pet not found");
+          expect(res.body).to.have.property("message", "Mascota no encontrada");
           done();
         });
     });

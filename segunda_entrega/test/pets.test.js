@@ -76,7 +76,7 @@ describe("Mascotas API", function () {
 
   describe("PUT /api/pets/:pid", function () {
     it("debería actualizar una mascota por ID", function (done) {
-      const petId = "somePetId";
+      const petId = "67379a0a2eb35daf5fe5bbe1";
       const updatedPetData = {
         name: "Buddy",
         specie: "cat",
@@ -94,7 +94,7 @@ describe("Mascotas API", function () {
     });
 
     it("debería devolver error si los datos son incompletos", function (done) {
-      const petId = "somePetId";
+      const petId = "67379a0a2eb35daf5fe5bbe1";
       const incompletePetData = {
         name: "Buddy",
       };

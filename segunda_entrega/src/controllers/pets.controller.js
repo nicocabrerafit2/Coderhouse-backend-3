@@ -43,9 +43,11 @@ const updatePet = async (req, res, next) => {
         .json({ status: "error", error: "Mascota no encontrada" });
     }
     const result = await petsService.update(petId, petUpdateBody);
-    res
-      .status(200)
-      .json({ status: "success", message: "Datos de mascota actualizada" });
+    res.status(200).json({
+      status: "success",
+      message: "Datos de mascota actualizada",
+      payload: result,
+    });
   } catch (error) {
     next(error);
   }

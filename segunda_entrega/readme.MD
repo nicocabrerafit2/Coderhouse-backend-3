@@ -1,44 +1,114 @@
-Pasos para ejecutar el repositorio:
+# API de Gestión de Mascotas y Usuarios
 
-- Paso 1: Clonar el repositorio
-- Paso 2: Descargar el archivo .env (enviado por privado) y pegarlo dentro de la carpeta "Primera entrega" (a la misma altura que la carpeta "src")
-- Paso 3: Abrir terminal desde el archivo app.js (ubicado dentro de carpeta "src")
-- Paso 4: Instalar dependencias (npm i)
-- Paso 5: Abrir terminal desde archivo app.js y ejecutar npm run dev
+## Descripción
+API REST para gestionar usuarios y mascotas, con funcionalidades de mockeo de datos y documentación Swagger.
 
-  Luego de eso ya se encuentra en condiciones de probar los endpoints desde postman.
+## Requisitos Previos
+- Node.js (v14 o superior)
+- MongoDB
+- Docker (opcional)
 
-Esta primera entrega contiene:
+## Instalación
 
-- GET http://localhost:8080/api/pets muestra las mascotas
+1. **Clonar el repositorio**
+bash
+git clone [URL_DEL_REPOSITORIO]
+cd segunda_entrega
 
-- GET http://localhost:8080/api/users muestra los usuarios
+2. **Configurar variables de entorno**
+- Solicitar el archivo `.env` al administrador
+- Colocarlo en la raíz del proyecto
 
-- GET http://localhost:8080/api/mocks/mockingusers genera con faker usuarios (recibe por body el parametro numUsers con el cual se define la cantidad a generar)
-  Estos usuarios llevan la siguiente estructura de propiedades:
-  "first_name" = random
-  "last_name" = random
-  "email" = random
-  “password” con la contraseña “coder123” encriptada.
-  “role” = puede variar entre “user” y “admin”.
-  “pets” = array vacío.
+3. **Instalar dependencias**
+bash
+npm install
 
-- GET http://localhost:8080/api/mocks/mockinpets genera con faker mascotas (recibe por body el parametro numPets con el cual se define la cantidad a generar)
-  Estas mascotas llevan la siguiente estructura de propiedades:
-  "name" = random
-  "specie" = random
-  "birthDate" = random
-  "adopted" = false,
-  "owner" = null,
-  "image" = random url,
+4. **Iniciar el servidor**
+bash
+Modo desarrollo
+npm run dev
+Modo producción
+npm start
 
-- POST http://localhost:8080/api/mocks/generateData genera con faker mascotas y usuarios (recibe por body el parametro numPets y numUsers con los cuales se definen la cantidad a generar. Estos son agregados en la base de datos mongoDB)
+## Endpoints Principales
 
-Para lograr esto se utilizan:
+### Usuarios
+- `GET /api/users` - Obtener todos los usuarios
+- `GET /api/users/:uid` - Obtener usuario por ID
+- `PUT /api/users/:uid` - Actualizar usuario
+- `DELETE /api/users/:uid` - Eliminar usuario
 
-- Los router "mocks.router.js", "users.router.js" y "pets.router.js"
-- Desde el archivo utils.js las funciones "generateMockPets", "generateMockUsers" y "createHash"
-- Desde UserRepository el metodo "mockingusers" y desde petRepository el metodo "mockingpets"
-- Los controller "mocks.controller", "users.controller" y "pets.controller" desde donde se responden las peticiones (con status incorporado)
+### Mascotas
+- `GET /api/pets` - Obtener todas las mascotas
+- `POST /api/pets` - Crear nueva mascota
+- `POST /api/pets/withimage` - Crear mascota con imagen
+- `PUT /api/pets/:pid` - Actualizar mascota
+- `DELETE /api/pets/:pid` - Eliminar mascota
 
-Se envian variables de entorno por archivo .env
+### Generación de Datos Mock
+- `GET /api/mocks/mockingusers` - Generar usuarios de prueba
+  ```json
+  {
+    "numUsers": 10 // Número de usuarios a generar
+  }
+  ```
+- `GET /api/mocks/mockinpets` - Generar mascotas de prueba
+  ```json
+  {
+    "numPets": 10 // Número de mascotas a generar
+  }
+  ```
+- `POST /api/mocks/generateData` - Generar y guardar datos en MongoDB
+  ```json
+  {
+    "numUsers": 10,
+    "numPets": 10
+  }
+  ```
+
+## Estructura de Datos
+
+### Usuario
+json
+{
+"first_name": "string",
+"last_name": "string",
+"email": "string",
+"password": "string (encriptada)",
+"role": "user | admin",
+"pets": []
+}
+
+### Mascota
+json
+{
+"name": "string",
+"specie": "string",
+"birthDate": "Date",
+"adopted": false,
+"owner": "null | userId",
+"image": "URL"
+}
+
+## Testing
+bash
+Ejecutar tests
+npm test
+
+## Documentación
+La documentación completa de la API está disponible en:
+- Swagger UI: `http://localhost:8080/api-docs`
+
+## Tecnologías Utilizadas
+- Express.js
+- MongoDB/Mongoose
+- JWT para autenticación
+- Multer para manejo de archivos
+- Swagger para documentación
+- Faker.js para datos mock
+- Mocha/Chai para testing
+
+## Scripts Disponibles
+- `npm run dev` - Iniciar en modo desarrollo
+- `npm start` - Iniciar en modo producción
+- `npm test` - Ejecutar tests

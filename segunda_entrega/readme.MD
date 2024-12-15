@@ -11,24 +11,23 @@ API REST para gestionar usuarios y mascotas, con funcionalidades de mockeo de da
 ## Instalación
 
 1. **Clonar el repositorio**
-bash
-git clone [URL_DEL_REPOSITORIO]
-cd segunda_entrega
+- git clone [URL_DEL_REPOSITORIO]
+- cd segunda_entrega
 
 2. **Configurar variables de entorno**
 - Solicitar el archivo `.env` al administrador
-- Colocarlo en la raíz del proyecto
+- Colocarlo en la raíz del proyecto (a la par de package.json)
 
 3. **Instalar dependencias**
-bash
-npm install
+- npm install
 
 4. **Iniciar el servidor**
-bash
-Modo desarrollo
-npm run dev
-Modo producción
-npm start
+
+- Modo desarrollo
+   - npm run dev
+   
+- Modo producción
+   - npm start
 
 ## Endpoints Principales
 
@@ -47,29 +46,13 @@ npm start
 
 ### Generación de Datos Mock
 - `GET /api/mocks/mockingusers` - Generar usuarios de prueba
-  ```json
-  {
-    "numUsers": 10 // Número de usuarios a generar
-  }
-  ```
 - `GET /api/mocks/mockinpets` - Generar mascotas de prueba
-  ```json
-  {
-    "numPets": 10 // Número de mascotas a generar
-  }
-  ```
 - `POST /api/mocks/generateData` - Generar y guardar datos en MongoDB
-  ```json
-  {
-    "numUsers": 10,
-    "numPets": 10
-  }
-  ```
 
 ## Estructura de Datos
 
 ### Usuario
-json
+  ```json
 {
 "first_name": "string",
 "last_name": "string",
@@ -78,22 +61,21 @@ json
 "role": "user | admin",
 "pets": []
 }
-
+ ```
 ### Mascota
-json
+ ```json
 {
 "name": "string",
 "specie": "string",
 "birthDate": "Date",
-"adopted": false,
+"adopted": false | true,
 "owner": "null | userId",
 "image": "URL"
 }
-
+ ```
 ## Testing
-bash
-Ejecutar tests
-npm test
+- Ejecutar tests
+  - npm test
 
 ## Documentación
 La documentación completa de la API está disponible en:

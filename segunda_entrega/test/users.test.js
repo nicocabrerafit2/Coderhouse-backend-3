@@ -63,7 +63,11 @@ describe("Usuarios API", function () {
         .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
-          expect(res.body.payload).to.include(updatedUserData);
+          expect(res.body.payload).to.have.property("first_name", updatedUserData.first_name);
+          expect(res.body.payload).to.have.property("last_name", updatedUserData.last_name);
+          expect(res.body.payload).to.have.property("email", updatedUserData.email);
+          expect(res.body.payload).to.have.property("role", updatedUserData.role);
+          expect(res.body.payload.pets).to.be.an('array').that.is.empty;
           done();
         });
     });

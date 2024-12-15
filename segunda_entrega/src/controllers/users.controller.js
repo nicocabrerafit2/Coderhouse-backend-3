@@ -45,7 +45,7 @@ const updateUser = async (req, res) => {
     if (camposFaltantes.length > 0) {
       return res.status(400).json({
         status: 'error',
-        message: 'Incomplete values'
+        error: 'Incomplete values'
       });
     }
   const user = await usersService.getUserById(userId);

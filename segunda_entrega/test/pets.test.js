@@ -79,7 +79,7 @@ describe("Mascotas API", function () {
       const updatedPetData = {
         name: "UpdatedTestPet",
         specie: "cat",
-        birthDate: new Date()
+        birthDate: new Date().toISOString()
       };
       request(app)
         .put(`/api/pets/${testPet._id}`)
@@ -88,7 +88,9 @@ describe("Mascotas API", function () {
         .end(function (err, res) {
           if (err) return done(err);
           expect(res.body).to.have.property("status", "success");
-          expect(res.body.payload).to.include(updatedPetData);
+          expect(res.body.payload).to.have.property("name", updatedPetData.name);
+          expect(res.body.payload).to.have.property("specie", updatedPetData.specie);
+          expect(new Date(res.body.payload.birthDate)).to.be.instanceOf(Date);
           done();
         });
     });

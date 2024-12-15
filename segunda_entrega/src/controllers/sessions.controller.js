@@ -18,7 +18,7 @@ const register = async (req, res) => {
         }
         let result = await usersService.create(user);
         console.log(result);
-        res.send({ status: "success", payload: result._id });
+        res.send({ status: "success", id: result._id });
     } catch (error) {
 
     }
@@ -43,21 +43,46 @@ const current = async(req,res) =>{
         return res.send({status:"success",payload:user})
 }
 
-const unprotectedLogin  = async(req,res) =>{
+const unprotectedLogin = async(req,res) =>{
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).send({ status: "error", error: "Incomplete values" });
     const user = await usersService.getUserByEmail(email);
     if(!user) return res.status(404).send({status:"error",error:"User doesn't exist"});
     const isValidPassword = await passwordValidation(user,password);
     if(!isValidPassword) return res.status(400).send({status:"error",error:"Incorrect password"});
-    const token = jwt.sign(user,'tokenSecretJWT',{expiresIn:"1h"});
+    
+    // Creamos un objeto plano
+    const userToToken = {
+        id: user._id,
+        email: user.email,
+        first_name: user.first_name,
+        last_name: user.last_name
+    };
+    
+    const token = jwt.sign(userToToken,'tokenSecretJWT',{expiresIn:"1h"});
     res.cookie('unprotectedCookie',token,{maxAge:3600000}).send({status:"success",message:"Unprotected Logged in"})
 }
 const unprotectedCurrent = async(req,res)=>{
-    const cookie = req.cookies['unprotectedCookie']
-    const user = jwt.verify(cookie,'tokenSecretJWT');
-    if(user)
-        return res.send({status:"success",payload:user})
+    try {
+        const cookie = req.cookies['unprotectedCookie'];
+        if (!cookie) {
+            return res.status(400).send({
+                status: "error",
+                message: "No hay cookie disponible"
+            });
+        }
+        return res.send({
+            status: "success", 
+            cookie: cookie
+        });
+        
+    } catch(error) {
+        return res.status(500).send({
+            status: "error",
+            message: "Error interno del servidor",
+            error: error.message
+        });
+    }
 }
 export default {
     current,

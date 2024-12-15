@@ -1,5 +1,34 @@
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           example: "67379d0d1504db7b9830b9e7"
+ *         first_name:
+ *           type: string
+ *           example: "Kaelyn"
+ *         last_name:
+ *           type: string
+ *           example: "Cabrera"
+ *         email:
+ *           type: string
+ *           example: "nicocabrera8@outlook.com"
+ *         password:
+ *           type: string
+ *           example: "123abc"
+ *         role:
+ *           type: string
+ *           example: "admin"
+ *         pets:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: []
+ * 
  * /api/users:
  *   get:
  *     summary: Obtiene todos los usuarios
@@ -17,51 +46,8 @@
  *                 payload:
  *                   type: array
  *                   items:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                         example: "67379d0d1504db7b9830b9e7"
- *                       first_name:
- *                         type: string
- *                         example: "Kaelyn"
- *                       last_name:
- *                         type: string
- *                         example: "Cabrera"
- *                       email:
- *                         type: string
- *                         example: "nicocabrera8@outlook.com"
- *                       password:
- *                         type: string
- *                         example: "123abc"
- *                       role:
- *                         type: string
- *                         example: "admin"
- *                       pets:
- *                         type: array
- *                         items:
- *                           type: string
- *                         example: []
- *                       __v:
- *                         type: integer
- *                         example: 0
- *       500:
- *         description: Error en el servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 error:
- *                   type: string
- *                   example: "Error en el servidor"
- */
-
-/**
- * @swagger
+ *                     $ref: '#/components/schemas/User'
+ * 
  * /api/users/{uid}:
  *   get:
  *     summary: Obtiene un usuario por ID
@@ -84,47 +70,7 @@
  *                   type: string
  *                   example: "success"
  *                 payload:
- *                   type: object
- *                   properties:
- *                     _id:
- *                       type: string
- *                       example: "67379d0d1504db7b9830b9e7"
- *                     first_name:
- *                       type: string
- *                       example: "Kaelyn"
- *                     last_name:
- *                       type: string
- *                       example: "Cabrera"
- *                     email:
- *                       type: string
- *                       example: "nicocabrera8@outlook.com"
- *                     password:
- *                       type: string
- *                       example: "123abc"
- *                     role:
- *                       type: string
- *                       example: "admin"
- *                     pets:
- *                       type: array
- *                       items:
- *                         type: string
- *                       example: []
- *                     __v:
- *                       type: integer
- *                       example: 0
- *       400:
- *         description: ID no válido
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 error:
- *                   type: string
- *                   example: "ID no válido"
+ *                   $ref: '#/components/schemas/User'
  *       404:
  *         description: Usuario no encontrado
  *         content:
@@ -137,24 +83,8 @@
  *                   example: "error"
  *                 error:
  *                   type: string
- *                   example: "Usuario no encontrado"
- *       500:
- *         description: Error en el servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 error:
- *                   type: string
- *                   example: "Error en el servidor"
- */
-/**
- * @swagger
- * /api/users/{uid}:
+ *                   example: "User not found"
+ * 
  *   put:
  *     summary: Actualiza un usuario existente
  *     parameters:
@@ -170,6 +100,12 @@
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - first_name
+ *               - last_name
+ *               - email
+ *               - password
+ *               - role
  *             properties:
  *               first_name:
  *                 type: string
@@ -193,7 +129,7 @@
  *                 example: []
  *     responses:
  *       200:
- *         description: Usuario modificado
+ *         description: Usuario actualizado
  *         content:
  *           application/json:
  *             schema:
@@ -202,11 +138,10 @@
  *                 status:
  *                   type: string
  *                   example: "success"
- *                 message:
- *                   type: string
- *                   example: "Usuario modificado"
+ *                 payload:
+ *                   $ref: '#/components/schemas/User'
  *       400:
- *         description: ID no válido
+ *         description: Datos inválidos
  *         content:
  *           application/json:
  *             schema:
@@ -217,37 +152,8 @@
  *                   example: "error"
  *                 error:
  *                   type: string
- *                   example: "ID no válido"
- *       404:
- *         description: Usuario no encontrado
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 error:
- *                   type: string
- *                   example: "Usuario no encontrado"
- *       500:
- *         description: Error en el servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 error:
- *                   type: string
- *                   example: "Error en el servidor"
- */
-/**
- * @swagger
- * /api/users/{uid}:
+ *                   example: "Incomplete values"
+ * 
  *   delete:
  *     summary: Elimina un usuario existente
  *     parameters:
@@ -271,19 +177,6 @@
  *                 message:
  *                   type: string
  *                   example: "Usuario eliminado"
- *       400:
- *         description: ID no válido
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 error:
- *                   type: string
- *                   example: "ID no válido"
  *       404:
  *         description: Usuario no encontrado
  *         content:
@@ -296,18 +189,5 @@
  *                   example: "error"
  *                 error:
  *                   type: string
- *                   example: "Usuario no encontrado"
- *       500:
- *         description: Error en el servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 error:
- *                   type: string
- *                   example: "Error en el servidor"
+ *                   example: "User not found"
  */

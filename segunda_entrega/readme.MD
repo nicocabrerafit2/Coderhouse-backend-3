@@ -94,3 +94,16 @@ La documentación completa de la API está disponible en:
 - `npm run dev` - Iniciar en modo desarrollo
 - `npm start` - Iniciar en modo producción
 - `npm test` - Ejecutar tests
+
+## Variables de Entorno
+
+Ejemplo del archivo `.env` en la raíz del proyecto:
+
+```env
+PORT="Puerto donde se ejecutará el servidor (por defecto 8080)"
+MONGO_STRING="URL de conexión a MongoDB Atlas o servidor local"
+DB="Nombre de la base de datos"
+SECRET="Clave secreta para firmar los tokens JWT"
+```
+
+> Nota: Solicitar las credenciales correctas al administrador del proyecto. No compartir el archivo `.env`

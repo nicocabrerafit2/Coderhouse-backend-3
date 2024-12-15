@@ -26,7 +26,7 @@ app.use("/api/pets", petsRouter);
 app.use("/api/adoptions", adoptionsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/mocks", mocksRouter);
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
